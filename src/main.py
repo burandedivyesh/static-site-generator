@@ -98,8 +98,8 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
 
             template_rpl = template.replace("{{ Title }}", title)
             template_rpl = template_rpl.replace("{{ Content }}", content)
-            template_rpl = template_rpl.replace('href="/', f'href="{basepath}')
-            template_rpl = template_rpl.replace('src="/', f'src="{basepath}')
+            template_rpl = template_rpl.replace('href="/', f'href=docs"{basepath}')
+            template_rpl = template_rpl.replace('src="/', f'src="docs{basepath}')
 
             target = ""
             if os.path.exists(dest_dir_path):
