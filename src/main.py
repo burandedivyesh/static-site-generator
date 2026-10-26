@@ -2,28 +2,15 @@ import os
 import shutil
 from helper import extract_title, markdown_to_htmlnode, markdown_to_blocks
 import sys
-
-# --------------------------------------------- Not in Use -------------------------------------
-def trial():
-    markdown_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/contents/index.md"
-    markdown = ""
-    with open(markdown_path, "r") as f:
-        markdown = f.read()
-
-    # Step 1 convert to blocks
-    blocks = markdown_to_blocks(markdown)
-    print("Step 1: ---------------------------------------")
-    for block in blocks:
-        print(block)
-        print("-----------next block-------------")
-
-# ------------------------------------------------------------------------------------------------
     
 basepath = ""
-if len(sys.argv) > 1:
-    basepath = sys.argv[1]
-else:
+print(sys.argv)
+if len(sys.argv) == 1:
     basepath = "/"
+    print(basepath)
+else:
+    basepath = sys.argv[1]
+    print(basepath)
 
 
 def copy_files(source_path:str, dest_path:str):
@@ -129,6 +116,11 @@ def main():
     # Copy static files to public
     source_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/static"
     dest_path   = "/home/thatguy/Personal/Work/thatguy/static-site-generator/docs"
+    dest_path = os.path.join(dest_path,basepath.replace("/", ""))
+    print(dest_path)
+    if not os.path.exists(dest_path):
+        os.mkdir(dest_path)
+
     copy_files(source_path, dest_path)
 
     # Export HTML to public
@@ -140,7 +132,10 @@ def main():
 
     content_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/contents"
     dst_dir_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/docs"
-    os.path.join(dst_dir_path,basepath)
+    dst_dir_path = os.path.join(dst_dir_path,basepath.replace("/", ""))
+    print(dst_dir_path)
+    if not os.path.exists(dst_dir_path):
+        os.mkdir(dst_dir_path)
 
     generate_pages_recursive(content_path, template_path, dst_dir_path)
 
