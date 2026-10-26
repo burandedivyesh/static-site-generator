@@ -116,13 +116,7 @@ def main():
     # Copy static files to public
     source_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/static"
     dest_path   = "/home/thatguy/Personal/Work/thatguy/static-site-generator/docs"
-    dest_path = os.path.join(dest_path,basepath.replace("/", ""))
-    print(dest_path)
-    if not os.path.exists(dest_path):
-        os.mkdir(dest_path)
-
-    copy_files(source_path, dest_path)
-
+    
     # Export HTML to public
     # markdown_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/contents/index.md"
     template_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/template.html"
@@ -132,11 +126,7 @@ def main():
 
     content_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/contents"
     dst_dir_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/docs"
-    dst_dir_path = os.path.join(dst_dir_path,basepath.replace("/", ""))
-    print(dst_dir_path)
-    if not os.path.exists(dst_dir_path):
-        os.mkdir(dst_dir_path)
-
+   
     generate_pages_recursive(content_path, template_path, dst_dir_path)
 
 if __name__ == "__main__":
