@@ -1,8 +1,9 @@
 import os
 import shutil
 from helper import extract_title, markdown_to_htmlnode, markdown_to_blocks
+import sys
 
-
+# --------------------------------------------- Not in Use -------------------------------------
 def trial():
     markdown_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/contents/index.md"
     markdown = ""
@@ -16,11 +17,15 @@ def trial():
         print(block)
         print("-----------next block-------------")
 
-    # Step 2 block to htmlnode
+# ------------------------------------------------------------------------------------------------
     
+basepath = ""
+if len(sys.argv) > 1:
+    basepath = sys.argv[1]
+else:
+    basepath = "/"
 
 
-    
 def copy_files(source_path:str, dest_path:str):
     if os.path.exists(dest_path):
         shutil.rmtree(dest_path)
@@ -91,7 +96,10 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             title = extract_title(markdown)
             content = markdown_to_htmlnode(markdown).to_html()
 
-            template_rpl = template.replace("{{ Title }}", title).replace("{{ Content }}", content)
+            template_rpl = template.replace("{{ Title }}", title)
+            template_rpl = template_rpl.replace("{{ Content }}", content)
+            template_rpl = template_rpl.replace('href="/', f'href="{basepath}')
+            template_rpl = template_rpl.replace('src="/', f'src="{basepath}')
 
             target = ""
             if os.path.exists(dest_dir_path):
@@ -117,39 +125,24 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
 
     return 
 
-            
-
-            
-
-
-
-
-
 def main():
     # Copy static files to public
     source_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/static"
-    dest_path   = "/home/thatguy/Personal/Work/thatguy/static-site-generator/public"
+    dest_path   = "/home/thatguy/Personal/Work/thatguy/static-site-generator/docs"
     copy_files(source_path, dest_path)
 
     # Export HTML to public
-    markdown_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/contents/index.md"
+    # markdown_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/contents/index.md"
     template_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/template.html"
-    html_path     = "/home/thatguy/Personal/Work/thatguy/static-site-generator/public"
+    # html_path     = "/home/thatguy/Personal/Work/thatguy/static-site-generator/docs"
     # generate_page(markdown_path, template_path, html_path)
     # trial()
+
     content_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/contents"
-    dst_dir_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/public"
+    dst_dir_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/docs"
+    os.path.join(dst_dir_path,basepath)
+
     generate_pages_recursive(content_path, template_path, dst_dir_path)
-
-
-
- 
-
-
-
-
-   
-
 
 if __name__ == "__main__":
     main()
