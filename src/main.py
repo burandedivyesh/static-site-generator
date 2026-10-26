@@ -116,7 +116,8 @@ def main():
     # Copy static files to public
     source_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/static"
     dest_path   = "/home/thatguy/Personal/Work/thatguy/static-site-generator/docs"
-    
+    copy_files(source_path, dest_path)
+
     # Export HTML to public
     # markdown_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/contents/index.md"
     template_path = "/home/thatguy/Personal/Work/thatguy/static-site-generator/template.html"
