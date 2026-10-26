@@ -8,14 +8,16 @@ from helper import split_nodes_delimiter
 
 class TestTexttoTextNodeDelimiter(unittest.TestCase):
     def test_eq(self):
-        md = "this is a **bold** text"
+        md = "this is a **bold** text and some more **bold** text"
         node = TextNode(md, InlineTextType.PLAIN)
         old_nodes = [node]
         new_nodes = split_nodes_delimiter(old_nodes, "**", InlineTextType.BOLD)
         self.assertSequenceEqual(new_nodes, 
                                  [TextNode("this is a ", InlineTextType.PLAIN),
                                   TextNode("bold", InlineTextType.BOLD),
-                                  TextNode(" text", InlineTextType.PLAIN)]) 
+                                  TextNode(" text and some more ", InlineTextType.PLAIN),
+                                  TextNode("bold", InlineTextType.BOLD),
+                                  TextNode("text", InlineTextType.PLAIN)]) 
 
     def test_eq1(self):
         md = "this is a _italic_ text"

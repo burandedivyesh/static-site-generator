@@ -20,7 +20,7 @@ class LeafNode(HTMLNode):
         Example : LeafNode("p", "This is a paragraph of text.").to_html()
                   "<p>This is a paragraph of text.</p>"
         """
-        if not self.value:
+        if self.value == None:
             raise ValueError("LeafNode must have a value.")
 
         if not self.tag or self.tag == None:
